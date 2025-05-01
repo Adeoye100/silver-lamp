@@ -6,12 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const cityInput = document.getElementById("city-input");
 
   // Default cities to display (modified as requested)
-  const defaultCities = [
-    "Lagos,NG",
-    "Ilorin,NG",
-    "Abuja,NG",
-    "London,GB"
-  ];
+  const defaultCities = ["Lagos,NG", "Ilorin,NG", "Abuja,NG", "London,GB"];
 
   // Fetch weather for default city (Lagos)
   fetchWeather("Lagos,NG", apiKey);
@@ -41,7 +36,7 @@ function fetchMultipleCities(apiKey) {
   const container = document.getElementById("multi-city-container");
   const cities = ["Lagos,NG", "Ilorin,NG", "Abuja,NG", "London,GB"];
 
-  cities.forEach(city => {
+  cities.forEach((city) => {
     fetchWeatherForMultiCity(city, apiKey, container);
   });
 }
@@ -51,13 +46,13 @@ function fetchWeatherForMultiCity(city, apiKey, container) {
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
   fetch(url)
-    .then(response => {
+    .then((response) => {
       if (!response.ok) {
         throw new Error(`Could not fetch data for ${city}`);
       }
       return response.json();
     })
-    .then(data => {
+    .then((data) => {
       const cityCard = document.createElement("div");
       cityCard.className = "col-md-6 col-lg-3 mb-3";
       cityCard.innerHTML = `
@@ -65,13 +60,15 @@ function fetchWeatherForMultiCity(city, apiKey, container) {
           <div class="h5">${data.name}, ${data.sys.country}</div>
           <div class="h4">${Math.round(data.main.temp)}°C</div>
           <div>${data.weather[0].description}</div>
-          <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}.png" 
+          <img src="https://openweathermap.org/img/wn/${
+            data.weather[0].icon
+          }.png" 
                alt="${data.weather[0].description}">
         </div>
       `;
       container.appendChild(cityCard);
     })
-    .catch(error => {
+    .catch((error) => {
       console.error(`Error fetching weather for ${city}:`, error);
       // Optionally show error message in the UI
     });
@@ -128,7 +125,7 @@ function changeBackground(weatherCondition) {
     Thunderstorm: "https://images.unsplash.com/photo-1562155618-e1a8bc2eb04f",
   };
 
-  const defaultBg = "img/bg.jpg";
+  const defaultBg = "img/sky.jpg";
   const bgUrl = backgrounds[weatherCondition] || defaultBg;
 
   document.body.style.backgroundImage = `url(${bgUrl})`;
